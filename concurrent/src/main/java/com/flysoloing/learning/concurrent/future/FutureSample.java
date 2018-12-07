@@ -1,5 +1,8 @@
 package com.flysoloing.learning.concurrent.future;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.*;
@@ -11,6 +14,8 @@ import java.util.concurrent.*;
  * Date:  2015/11/15 15:44
  */
 public class FutureSample {
+
+    private static final Logger logger = LoggerFactory.getLogger(FutureSample.class);
 
     public static void main(String[] args) {
         //1、新建一个FutureTask任务
@@ -33,64 +38,69 @@ public class FutureSample {
 //        final Future<String> future = Executors.newScheduledThreadPool(1).submit(new Callable<String>() {
 //        final Future<String> future = Executors.newWorkStealingPool().submit(new Callable<String>() {
             public String call() throws Exception {
-                Thread.sleep(4000l);
+                Thread.sleep(4000L);
                 return "TYPE 2 SUCCESS";
             }
         });
 
         //Timer守护线程执行计时，每隔1秒输出一次当前时间
-        Timer timer = new Timer(true);
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("daemon thread current time: " + System.currentTimeMillis());
-            }
-        }, 0l, 1000l);
+//        Timer timer = new Timer(true);
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                System.out.println("daemon thread current time: " + System.currentTimeMillis());
+//            }
+//        }, 0L, 1000L);
+
+        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleWithFixedDelay(() -> {
+            logger.info("daemon thread current time: " + System.currentTimeMillis());
+        }, 0L, 1000L, TimeUnit.MILLISECONDS);
 
         String result = "NULL";
 
         try {
             long begin = System.currentTimeMillis();
-            System.out.println("1、thread blocking, current time: " + begin);
-            result = future.get(2000l, TimeUnit.MILLISECONDS);
+            logger.info("1、thread blocking, current time: " + begin);
+            result = future.get(2000L, TimeUnit.MILLISECONDS);
             long end = System.currentTimeMillis();
-            System.out.println("1、get result: " + result + ", current time: " + end + ", consumed time: " + (end - begin));
+            logger.info("1、get result: " + result + ", current time: " + end + ", consumed time: " + (end - begin));
         } catch (Exception e) {
-            System.out.println("1、get result: " + result + ", current time: " + System.currentTimeMillis());
-            e.printStackTrace();
+            logger.info("1、get result: " + result + ", current time: " + System.currentTimeMillis());
+            logger.error("Occurred exception, ", e);
         }
 
         try {
             long begin = System.currentTimeMillis();
-            System.out.println("2、thread blocking, current time: " + begin);
-            result = future.get(4000l, TimeUnit.MILLISECONDS);
+            logger.info("2、thread blocking, current time: " + begin);
+            result = future.get(4000L, TimeUnit.MILLISECONDS);
             long end = System.currentTimeMillis();
-            System.out.println("2、get result: " + result + ", current time: " + end + ", consumed time: " + (end - begin));
+            logger.info("2、get result: " + result + ", current time: " + end + ", consumed time: " + (end - begin));
         } catch (Exception e) {
-            System.out.println("2、get result: " + result + ", current time: " + System.currentTimeMillis());
-            e.printStackTrace();
+            logger.info("2、get result: " + result + ", current time: " + System.currentTimeMillis());
+            logger.error("Occurred exception, ", e);
         }
 
         try {
             long begin = System.currentTimeMillis();
-            System.out.println("3、thread blocking, current time: " + begin);
-            result = future.get(8000l, TimeUnit.MILLISECONDS);
+            logger.info("3、thread blocking, current time: " + begin);
+            result = future.get(8000L, TimeUnit.MILLISECONDS);
             long end = System.currentTimeMillis();
-            System.out.println("3、get result: " + result + ", current time: " + end + ", consumed time: " + (end - begin));
+            logger.info("3、get result: " + result + ", current time: " + end + ", consumed time: " + (end - begin));
         } catch (Exception e) {
-            System.out.println("3、get result: " + result + ", current time: " + System.currentTimeMillis());
-            e.printStackTrace();
+            logger.info("3、get result: " + result + ", current time: " + System.currentTimeMillis());
+            logger.error("Occurred exception, ", e);
         }
 
         try {
             long begin = System.currentTimeMillis();
-            System.out.println("4、thread blocking, current time: " + begin);
+            logger.info("4、thread blocking, current time: " + begin);
             result = future.get();
             long end = System.currentTimeMillis();
-            System.out.println("4、get result: " + result + ", current time: " + end + ", consumed time: " + (end - begin));
+            logger.info("4、get result: " + result + ", current time: " + end + ", consumed time: " + (end - begin));
         } catch (Exception e) {
-            System.out.println("4、get result: " + result + ", current time: " + System.currentTimeMillis());
-            e.printStackTrace();
+            logger.info("4、get result: " + result + ", current time: " + System.currentTimeMillis());
+            logger.error("Occurred exception, ", e);
         }
     }
 
