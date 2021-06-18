@@ -17,7 +17,7 @@
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.28</slf4j.version>
         <!-- network -->
-        <netty.version>4.1.9.Final</netty.version>
+        <netty.version>4.1.42.Final</netty.version>
         <httpclient.version>4.5.3</httpclient.version>
         <protobuf-java.version>3.2.0</protobuf-java.version>
         <!-- maven plugin -->
