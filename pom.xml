@@ -18,7 +18,7 @@
         <slf4j.version>1.7.28</slf4j.version>
         <!-- network -->
         <netty.version>4.1.9.Final</netty.version>
-        <httpclient.version>4.5.3</httpclient.version>
+        <httpclient.version>4.5.13</httpclient.version>
         <protobuf-java.version>3.2.0</protobuf-java.version>
         <!-- maven plugin -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
