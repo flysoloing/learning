@@ -19,7 +19,7 @@
         <!-- network -->
         <netty.version>4.1.9.Final</netty.version>
         <httpclient.version>4.5.3</httpclient.version>
-        <protobuf-java.version>3.2.0</protobuf-java.version>
+        <protobuf-java.version>3.16.1</protobuf-java.version>
         <!-- maven plugin -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
